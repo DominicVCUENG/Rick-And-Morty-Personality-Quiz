@@ -1,3 +1,5 @@
+@import 'animate.css';
+
 * {
   padding: 0;
   font-family: 'Poppins', sans-serif;
@@ -24,30 +26,30 @@ body {
 
 #title-bar img {
   width: 20%;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 #title-bar h1 {
-  text-transform: uppercase; /* or lowercase */
+  text-transform: uppercase;
   border: 5px solid black;
-  letter-spacing: 2px;
+  padding: 10px;
+  letter-spacing: 10px;
   margin: auto;
   text-decoration: underline;
   display: inline;
   font-weight: bold;
-  font-size: 30px; 
-  opacity: 0.8;
+  font-size: 1.5vw; 
+  animation: rollIn 2s;
 }
 
 #start-screen {
   background: white;
-  padding: 50px;
+  padding: 10px 50px;
   width: 60%;
   height: 300px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   margin: auto;
   margin-top: 20px;
@@ -66,26 +68,61 @@ body {
   margin-bottom: 200px;
 }
 
-#end-screen {
-  margin-top: 10px;
-  margin-bottom: 15px;
+#start-screen, #quiz {
+  border: solid 5px black;
 }
 
-#character-name {
-  color:#001e4d;
+@font-face {
+  font-family: 'get_schwifty';
+  src: url('get_schwifty.woff2') format('woff2'),
+       url('get_schwifty.woff2') format('woff2');
 }
 
 #start-screen h2 {
-  color: #001e4d;
-  height: 50px;
-  margin-bottom: 20px;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  font-size: 3vw;
+  animation: fadeInUp 6s, gradient 15s ease infinite, bounce 2s infinite;
 }
+
+#start-screen h2, #question{
+  font-family: 'get_schwifty';
+  font-weight: bold;
+  background: linear-gradient(145deg, #08a2b7, #12b4ca, #08b4b7);
+  background-size: 400% 400%;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#end-screen {
+  margin: 10px auto 15px auto;
+  font-size: 1vw;
+}
+
+.character-image {
+  width: 20vw;
+}
+
+
 
 #question {
   margin-top: 50px;
   margin-bottom: 50px;
-  height: 50px;
-  color: #001e4d;
+  font-size: 2vw;
+  animation: gradient 15s ease infinite;
 }
 
 #answer-buttons {
@@ -101,32 +138,42 @@ body {
   width: 100%;
   border: 1px solid #222;
   padding: 10px;
-  margin: 10px 0;
+  margin: 15px 0;
   text-align: left;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
+  font-size: 1.5vw;
 }
 
 .btn:hover {
-  background: #001e4d;
-  color: #fff;
+  background: #00e760;
+  border: 1px solid #00e760;
+  color: black;
+}
+
+.start-btn {
+  animation: fadeIn 8s;
 }
 
 .start-btn, .restart-btn {
   background: #fff;
   color: #001e4d;
   font-weight: 500;
-  width: 20%;
-  border: 1px solid #222;
+  font-size: 1.5vw;
+  width: 10vw;
+  border: 1px solid #464646;
   padding: 10px;
   margin: 10px 0;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .start-btn:hover, .restart-btn:hover {
-  background: #001e4d;
+  background: #00e760;
+  border: 1px solid #00e760;
   color: #fff;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
+import 'animate.css'
 import './App.css';
+import clickSound from './click-sound.wav';
 
 const questions = [
 	{
@@ -96,6 +97,8 @@ function App() {
     const [error, setError] = useState(null);
 
     const handleAnswerClick = (score) => {
+		const audio = new Audio(clickSound);
+    	audio.play();
         setScore(scorenum + score);
         if (currentQuestionIndex === questions.length - 1) {
             fetchCharacter();
@@ -121,7 +124,15 @@ function App() {
             });
     }
 
+	const startQuiz = () => {
+		const audio = new Audio(clickSound);
+    	audio.play();
+		setStarted(true);
+	}
+
     const restartQuiz = () => {
+		const audio = new Audio(clickSound);
+    	audio.play();
         setCurrentQuestionIndex(0);
         setScore(0);
         setShowResult(false);
@@ -147,7 +158,7 @@ function App() {
                             <h1 id="result">You are</h1>
                             <div>
                                 <h2 id="character-name">{Character.name}</h2>
-                                <img src={Character.image} alt={Character.name}></img>
+                                <img src={Character.image} alt={Character.name} className='character-image'></img>
                                 <p>Status: {Character.status}</p>
                                 <p>Species: {Character.species}</p>
                                 <p>Gender: {Character.gender}</p>
@@ -171,8 +182,8 @@ function App() {
                 </div>
             ) : (
                 <div id='start-screen'>
-                    <h2>Click Start Quiz to begin!</h2>
-                    <button className='start-btn' onClick={() => setStarted(true)}>Start Quiz</button>
+                    <h2 className='animate__backInDown'>Click Start Quiz to begin!</h2>
+                    <button className='start-btn' onClick={startQuiz}>Start Quiz</button>
                 </div>
             )}
         </div>
