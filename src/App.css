@@ -27,6 +27,7 @@ body {
 #title-bar img {
   width: 20%;
   margin-bottom: 40px;
+  transition: transform 0.3s ease;
 }
 
 #title-bar h1 {
@@ -40,6 +41,11 @@ body {
   font-weight: bold;
   font-size: 1.5vw; 
   animation: rollIn 2s;
+  transition: transform 0.3s ease;
+}
+
+#title-bar img:hover, #title-bar h1:hover {
+  transform: scale(1.05, 1.05);
 }
 
 #start-screen {
@@ -70,6 +76,11 @@ body {
 
 #start-screen, #quiz {
   border: solid 5px black;
+  transition: transform 0.3s ease;
+}
+
+#start-screen:hover, #quiz:hover {
+  transform: translateY(-5px) scale(0.99, 1.05); 
 }
 
 @font-face {
@@ -116,8 +127,6 @@ body {
   width: 20vw;
 }
 
-
-
 #question {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -147,9 +156,10 @@ body {
 }
 
 .btn:hover {
-  background: #00e7a2;
+  background: #00e760;
   border: 1px solid #00e760;
   color: black;
+  box-shadow: 0 0 35px #00e760;
 }
 
 .start-btn {
@@ -173,7 +183,32 @@ body {
 }
 
 .start-btn:hover, .restart-btn:hover {
-  background: #00e7a2;
+  background: #00e760;
   border: 1px solid #00e760;
   color: #fff;
+  box-shadow: 0 0 35px #00e760;
+}
+
+#info-btn {
+  text-decoration: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  background-color: white;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+#info-btn:hover {
+  text-decoration: underline;
+  color: rgb(30, 1, 116);
+}
+
+.results-screen {
+  padding: 20px;
+  font-size: 16px;
+}
+
+.results-screen img {
+  margin-top: 20px;
+  margin-bottom: 40px;
 }

@@ -88,25 +88,28 @@ const questions = [
 
 
 function App() {
-    console.log("Component rendered");
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [scorenum, setScore] = useState(0);
-    const [showResult, setShowResult] = useState(false);
-    const [started, setStarted] = useState(false);
-    const [Character, setCharacter] = useState(null);
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [scorenum, setScore] = useState(0);
+	const [showResult, setShowResult] = useState(false);
+	const [started, setStarted] = useState(false);
+	const [Character, setCharacter] = useState(null);
+	const [infoPage, setInfoPage] = useState(false);
+	const [origin, setOrigin] = useState(null);
+	const [location, setLocation] = useState(null);
+	const [episode, setEpisode] = useState(null);
+	const audio = new Audio(clickSound);
 
-    const handleAnswerClick = (score) => {
-        const audio = new Audio(clickSound);
-        audio.play();
-        setScore(scorenum + score);
-        if (currentQuestionIndex === questions.length - 1) {
-            setShowResult(true);
-        } else {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
-        }
-    };
+	const handleAnswerClick = (score) => {
+		audio.play();
+		setScore(scorenum + score);
+		if (currentQuestionIndex === questions.length - 1) {
+			setShowResult(true);
+		} else {
+			setCurrentQuestionIndex(currentQuestionIndex + 1);
+		}
+	};
 
-    useEffect(() => {
+	useEffect(() => {
 		const fetchCharacter = () => {
 			fetch(`https://rickandmortyapi.com/api/character/${scorenum}`)
 				.then(response => {
@@ -122,76 +125,173 @@ function App() {
 					console.log(error.message);
 				});
 		};
-	
+
 		if (showResult && !Character) {
 			fetchCharacter();
 		}
 	}, [showResult, Character, scorenum]);
 
+	useEffect(() => {
+		const fetchOrigin = () => {
+			fetch(`${Character.origin.url}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					setOrigin(data);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		};
+
+		const fetchLocation = () => {
+			fetch(`${Character.location.url}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					setLocation(data);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		};
+
+		const fetchEpisode = () => {
+			fetch(`${Character.episode[0]}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					setEpisode(data);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		};
+
+		if (infoPage && Character.origin.name !== "unknown") {
+			fetchOrigin();
+		}
+
+		if (infoPage && Character.location.name !== "unknown") {
+			fetchLocation();
+		}
+
+		if (infoPage) {
+			fetchEpisode();
+		}
+
+	}, [infoPage, Character]);
+
 	const startQuiz = () => {
-		const audio = new Audio(clickSound);
-    	audio.play();
+		audio.play();
 		setStarted(true);
 	}
 
-    const restartQuiz = () => {
-		const audio = new Audio(clickSound);
-    	audio.play();
-        setCurrentQuestionIndex(0);
-        setScore(0);
-        setShowResult(false);
-		setCharacter(null);
-    };
+	const showInfo = () => {
+		audio.play();
+		setInfoPage(true);
+	}
 
-    return (
-        <div className="App">
-            <header>
+	const restartQuiz = () => {
+		audio.play();
+		setCurrentQuestionIndex(0);
+		setScore(0);
+		setShowResult(false);
+		setCharacter(null);
+		setInfoPage(false);
+		setOrigin(null);
+		setLocation(null);
+		setEpisode(null);
+	};
+
+	return (
+		<div className="App">
+			<header>
 				<div id="title-bar">
-					<img src="/title-logo.png" alt="not found"></img>
+					<a href='/'>
+						<img src="/title-logo.png" alt="not found"></img>
+					</a>
 					<h1>
 						Personality Quiz
 					</h1>
-				</div>		
+				</div>
 			</header>
-            {started ? (
-                <div id="quiz">
-                    {showResult && !Character ? (
-                        <div>Loading...</div>
-                    ) : showResult && Character ? (
-                        <div id='end-screen'>
-                            <h1 id="result">You are</h1>
-                            <div>
-                                <h2 id="character-name">{Character.name}</h2>
-                                <img src={Character.image} alt={Character.name} className='character-image'></img>
-                                <p>Status: {Character.status}</p>
-                                <p>Species: {Character.species}</p>
-                                <p>Gender: {Character.gender}</p>
-                                <p>Origin: {Character.origin.name}</p>
-                                <p>Last Known Location: {Character.location.name}</p>
-                            </div>
-                            <button className="restart-btn" onClick={restartQuiz}>Restart Quiz</button>
-                        </div>
-                    ) : (
-                        <>
-                            <h1 id="question">{questions[currentQuestionIndex].question}</h1>
-                            <div id="answer-buttons">
-                                {questions[currentQuestionIndex].answers.map((answer, index) => (
-                                    <button key={index} className="btn" onClick={() => handleAnswerClick(answer.score)}>
-                                        {answer.text}
-                                    </button>
-                                ))}
-                            </div>
-                        </>
-                    )}
-                </div>
-            ) : (
-                <div id='start-screen'>
-                    <h2 className='animate__backInDown'>Click Start Quiz to begin!</h2>
-                    <button className='start-btn' onClick={startQuiz}>Start Quiz</button>
-                </div>
-            )}
-        </div>
-    );
+			{started ? (
+				<div id="quiz">
+					{showResult && !Character ? (
+						<div>Loading...</div>
+					) : showResult && Character ? (
+						<div id='end-screen'>
+							{!infoPage && !episode ? (
+								<>
+									<h1 id="result">You are</h1>
+									<div>
+										<h2 id="character-name">{Character.name}</h2>
+										<img src={Character.image} alt={Character.name} className='character-image'></img>
+										<p>Status: {Character.status}</p>
+										<p>Species: {Character.species}</p>
+										<p>Gender: {Character.gender}</p>
+										<p>Origin: {Character.origin.name}</p>
+										<p>Last Known Location: {Character.location.name}</p>
+										<button id='info-btn' onClick={showInfo}>Learn more</button>
+									</div>
+									<button className="restart-btn" onClick={restartQuiz}>Restart Quiz</button>
+								</>
+							) : (
+								<>
+									<div className='results-screen'>
+										<img src={Character.image} alt={Character.name} className='character-image'></img>
+										{episode && episode.air_date && (
+											<p>You are {Character.name} who first appeared on episode {episode.episode}, "{episode.name}"" which first aired on {episode.air_date}, along side {episode.characters.length} other characters. You also appear in {Character.episode.length - 1} other episodes.</p>
+										)}
+										{origin ? (
+											<p>You are from {Character.origin.name} which is a {origin.type} located within {origin.dimension} and is home to over {origin.residents.length} residents.</p>
+										) : (
+											<p>You are from an unknown location.</p>
+										)}
+										{location ? (
+											<p>Your last known location is on {Character.location.name} which is a {location.type} located within {location.dimension} and is home to over {location.residents.length} residents.</p>
+										) : (
+											<p>This character's last location is yet to be known.</p>
+										)}
+									</div>
+									<button className="restart-btn" onClick={restartQuiz}>Restart Quiz</button>
+								</>
+							)}
+						</div>
+					) : (
+						<>
+							<h1 id="question">{questions[currentQuestionIndex].question}</h1>
+							<div id="answer-buttons">
+								{questions[currentQuestionIndex].answers.map((answer, index) => (
+									<button key={index} className="btn" onClick={() => handleAnswerClick(answer.score)}>
+										{answer.text}
+									</button>
+								))}
+							</div>
+						</>
+					)}
+				</div>
+			) : (
+				<div id='start-screen'>
+					<h2 className='animate__backInDown'>Click Start Quiz to begin!</h2>
+					<button className='start-btn' onClick={startQuiz}>Start Quiz</button>
+				</div>
+			)}
+		</div>
+	);
 }
 
 export default App;
