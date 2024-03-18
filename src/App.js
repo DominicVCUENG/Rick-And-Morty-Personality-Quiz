@@ -95,12 +95,6 @@ function App() {
     const [started, setStarted] = useState(false);
     const [Character, setCharacter] = useState(null);
 
-	useEffect(() => {
-        if (showResult && !Character) {
-            fetchCharacter();
-        }
-    }, [showResult, Character]);
-
     const handleAnswerClick = (score) => {
         const audio = new Audio(clickSound);
         audio.play();
@@ -112,21 +106,27 @@ function App() {
         }
     };
 
-    const fetchCharacter = () => {
-        fetch(`https://rickandmortyapi.com/api/character/${scorenum}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCharacter(data);
-            })
-            .catch(error => {
-                console.log(error.message);
-            });
-    }
+    useEffect(() => {
+		const fetchCharacter = () => {
+			fetch(`https://rickandmortyapi.com/api/character/${scorenum}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					setCharacter(data);
+				})
+				.catch(error => {
+					console.log(error.message);
+				});
+		};
+	
+		if (showResult && !Character) {
+			fetchCharacter();
+		}
+	}, [showResult, Character, scorenum]);
 
 	const startQuiz = () => {
 		const audio = new Audio(clickSound);
