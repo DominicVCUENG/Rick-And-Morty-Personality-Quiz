@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'animate.css'
 import './App.css';
 import clickSound from './click-sound.wav';
@@ -95,13 +95,18 @@ function App() {
     const [started, setStarted] = useState(false);
     const [Character, setCharacter] = useState(null);
 
+	useEffect(() => {
+        if (showResult && !Character) {
+            fetchCharacter();
+        }
+    }, [showResult, Character]);
+
     const handleAnswerClick = (score) => {
-		const audio = new Audio(clickSound);
-    	audio.play();
+        const audio = new Audio(clickSound);
+        audio.play();
         setScore(scorenum + score);
         if (currentQuestionIndex === questions.length - 1) {
-            fetchCharacter();
-			setShowResult(true);
+            setShowResult(true);
         } else {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
