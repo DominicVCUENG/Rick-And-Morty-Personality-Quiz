@@ -147,7 +147,7 @@ body {
 }
 
 .btn:hover {
-  background: #00e760;
+  background: #00e7a2;
   border: 1px solid #00e760;
   color: black;
 }
@@ -173,7 +173,7 @@ body {
 }
 
 .start-btn:hover, .restart-btn:hover {
-  background: #00e760;
+  background: #00e7a2;
   border: 1px solid #00e760;
   color: #fff;
 }
