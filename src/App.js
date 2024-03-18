@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'animate.css'
 import './App.css';
 import clickSound from './click-sound.wav';
@@ -94,7 +94,6 @@ function App() {
     const [showResult, setShowResult] = useState(false);
     const [started, setStarted] = useState(false);
     const [Character, setCharacter] = useState(null);
-    const [error, setError] = useState(null);
 
     const handleAnswerClick = (score) => {
 		const audio = new Audio(clickSound);
@@ -120,7 +119,7 @@ function App() {
                 setCharacter(data);
             })
             .catch(error => {
-                setError(error.message);
+                console.log(error.message);
             });
     }
 
