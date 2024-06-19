@@ -254,7 +254,7 @@ function App() {
 									<div className='results-screen'>
 										<img src={Character.image} alt={Character.name} className='character-image'></img>
 										{episode && episode.air_date && (
-											<p>You are {Character.name} who first appeared on episode {episode.episode}, "{episode.name}"" which first aired on {episode.air_date}, along side {episode.characters.length} other characters. You also appear in {Character.episode.length - 1} other episodes.</p>
+											<p>You are {Character.name} who first appeared on episode {episode.episode}, "{episode.name}" which first aired on {episode.air_date}, along side {episode.characters.length} other characters. You also appear in {Character.episode.length - 1} other episodes.</p>
 										)}
 										{origin ? (
 											<p>You are from {Character.origin.name} which is a {origin.type} located within {origin.dimension} and is home to over {origin.residents.length} residents.</p>
