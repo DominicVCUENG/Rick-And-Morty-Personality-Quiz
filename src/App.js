@@ -276,7 +276,7 @@ function App() {
 							<h1 id="question">{questions[currentQuestionIndex].question}</h1>
 							<div id="answer-buttons">
 								{questions[currentQuestionIndex].answers.map((answer, index) => (
-									<button key={index} className="btn" onClick={() => handleAnswerClick(answer.score)}>
+									<button key={`${currentQuestionIndex}-${index}`} className="btn" onClick={() => handleAnswerClick(answer.score)}>
 										{answer.text}
 									</button>
 								))}

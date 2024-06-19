@@ -2,7 +2,7 @@
 
 * {
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Courier New', monospace;
   box-sizing: border-box;
 }
 
@@ -51,7 +51,7 @@ body {
 
 #start-screen {
   background: white;
-  padding: 10px 30px;
+  padding: 10px;
   width: 60%;
   height: 300px;
   border-radius: 4px;
@@ -95,6 +95,7 @@ body {
   margin-bottom: 40px;
   font-size: 3vw;
   animation: fadeInUp 6s, gradient 15s ease infinite, bounce 2s infinite;
+  text-align: center;
 }
 
 #start-screen h2, #question{
@@ -121,6 +122,7 @@ body {
 
 #end-screen {
   margin: 10px auto 15px auto;
+  font-weight: bold;
   font-size: 14px;
 }
 
@@ -144,7 +146,7 @@ body {
 .btn {
   background: #fff;
   color: #222;
-  font-weight: 500;
+  font-weight: bold;
   width: 100%;
   border: 1px solid #222;
   padding: 10px;
@@ -170,7 +172,7 @@ body {
 .start-btn, .restart-btn {
   background: #fff;
   color: #222;
-  font-weight: 500;
+  font-weight: bold;
   font-size: 1.5vw;
   width: fit-content;
   border: 2px solid #222;
@@ -240,7 +242,7 @@ body {
 
 @media only screen and (max-width: 900px){
   .btn { 
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 }
 
