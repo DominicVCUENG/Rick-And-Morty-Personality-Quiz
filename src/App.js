@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'animate.css'
 import './App.css';
+import axios from 'axios';
 import clickSound from './click-sound.wav';
 
 const questions = [
@@ -110,21 +111,22 @@ function App() {
 	};
 
 	useEffect(() => {
+		const buttons = document.querySelectorAll('.btn');
+		buttons.forEach(button => {
+		  button.classList.remove('hover');
+		});
+	  }, [currentQuestionIndex]);
+
+	useEffect(() => {
 		const fetchCharacter = () => {
-			fetch(`https://rickandmortyapi.com/api/character/${scorenum}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then(data => {
-					setCharacter(data);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
-		};
+			axios.get(`https://rickandmortyapi.com/api/character/${scorenum}`)
+			  .then(response => {
+				setCharacter(response.data);
+			  })
+			  .catch(error => {
+				console.log(error.message);
+			  });
+		  };
 
 		if (showResult && !Character) {
 			fetchCharacter();
@@ -133,52 +135,34 @@ function App() {
 
 	useEffect(() => {
 		const fetchOrigin = () => {
-			fetch(`${Character.origin.url}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then(data => {
-					setOrigin(data);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
-		};
+			axios.get(`${Character.origin.url}`)
+			  .then(response => {
+				setOrigin(response.data);
+			  })
+			  .catch(error => {
+				console.log(error.message);
+			  });
+		  };
 
 		const fetchLocation = () => {
-			fetch(`${Character.location.url}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then(data => {
-					setLocation(data);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
-		};
+			axios.get(`${Character.location.url}`)
+			  .then(response => {
+				setLocation(response.data);
+			  })
+			  .catch(error => {
+				console.log(error.message);
+			  });
+		  };
 
-		const fetchEpisode = () => {
-			fetch(`${Character.episode[0]}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then(data => {
-					setEpisode(data);
-				})
-				.catch(error => {
-					console.log(error.message);
-				});
-		};
+		  const fetchEpisode = () => {
+			axios.get(`${Character.episode[0]}`)
+			  .then(response => {
+				setEpisode(response.data);
+			  })
+			  .catch(error => {
+				console.log(error.message);
+			  });
+		  };
 
 		if (infoPage && Character.origin.name !== "unknown") {
 			fetchOrigin();
@@ -276,7 +260,7 @@ function App() {
 							<h1 id="question">{questions[currentQuestionIndex].question}</h1>
 							<div id="answer-buttons">
 								{questions[currentQuestionIndex].answers.map((answer, index) => (
-									<button key={`${currentQuestionIndex}-${index}`} className="btn" onClick={() => handleAnswerClick(answer.score)}>
+									<button key={index} className="btn" onClick={() => handleAnswerClick(answer.score)}>
 										{answer.text}
 									</button>
 								))}
