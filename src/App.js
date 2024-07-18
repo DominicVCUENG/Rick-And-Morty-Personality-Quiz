@@ -119,7 +119,7 @@ function App() {
 
 	useEffect(() => {
 		const fetchCharacter = () => {
-			axios.get(`https://rickandmortyapi.com/api/character/${scorenum}`)
+			axios.get(`https://rickandmortyapi.com/api/character/${scorenum*3}`)
 			  .then(response => {
 				setCharacter(response.data);
 			  })
