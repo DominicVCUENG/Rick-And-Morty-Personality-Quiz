@@ -1,5 +1,7 @@
 # Rick and Morty Personality Quiz
 
+[Live Site](https://rickandmortypersonalityquiz.netlify.app/)
+
 Welcome to the Rick and Morty Personality Quiz project! This repository contains the code for a fun and interactive personality quiz based on the popular TV show Rick and Morty.
 
 ## Overview
