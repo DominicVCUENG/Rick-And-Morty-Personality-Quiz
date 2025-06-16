@@ -188,6 +188,14 @@ function App() {
 		setInfoPage(true);
 	}
 
+	const showPreviousInfo = () => {
+		audio.play();
+		setInfoPage(false);
+		setOrigin(null);
+		setLocation(null);
+		setEpisode(null);
+};
+
 	const restartQuiz = () => {
 		audio.play();
 		setCurrentQuestionIndex(0);
@@ -250,6 +258,7 @@ function App() {
 										) : (
 											<p>This character's last location is yet to be known.</p>
 										)}
+										<button id='back-btn' onClick={showPreviousInfo}>Back</button>
 									</div>
 									<button className="restart-btn" onClick={restartQuiz}>Restart Quiz</button>
 								</>
